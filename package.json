@@ -1,0 +1,20 @@
+{
+  "name": "gae-cron-snapshot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@google-cloud/compute": "^0.9.1",
+    "express": "^4.16.3"
+  },
+  "engines": {
+    "node": "8.x",
+    "yarn": ">=1.0.0 <2.0.0"
+  }
+}

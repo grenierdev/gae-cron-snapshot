@@ -1,0 +1,27 @@
+
+
+cron:
+  - description: cron minute
+    url: /cron/minute
+    schedule: every 1 minutes
+    timezone: America/Montreal
+
+  - description: cron hourly
+    url: /cron/hourly
+    schedule: every 1 hours synchronized
+    timezone: America/Montreal
+
+  - description: cron daily
+    url: /cron/daily
+    schedule: every day 00:00
+    timezone: America/Montreal
+
+  - description: cron weekly
+    url: /cron/weekly
+    schedule: every sunday 00:10
+    timezone: America/Montreal
+
+  - description: cron monthly
+    url: /cron/monthly
+    schedule: 1 of month 00:20
+    timezone: America/Montreal
