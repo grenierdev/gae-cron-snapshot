@@ -1,7 +1,7 @@
 "use strict";
 
 const assert = require('assert');
-const moment = require('moment');
+const moment = require('moment-timezone');
 const express = require('express');
 const app = express();
 
@@ -81,15 +81,18 @@ async function rotateBackup(suffix, format, keep) {
 		let snaps = await fetchSnapshots(`(sourceDiskId eq "${disk.metadata.id}") (name eq ^${disk.id}-${suffix}.*)`);
 
 		// Create new snapshot
-		const name = `${disk.id}-${suffix}-${moment().format(format)}`;
+		const name = `${disk.id}-${suffix}-${moment().tz("America/New_York").format(format)}`;
 		console.log(`Creating snapshot ${name}`);
 		const [snap, op, resp] = await disk.createSnapshot(name);
+
+		// Add fake metadata for sorting
+		snap.metadata.creationTimestamp = moment().tz("America/Los_Angeles").format('YYYY-MM-DDTHH:mm:ss.SSSZ');
 
 		// Add snapshot to list
 		snaps.push(snap);
 
-		// Sort by date using the name
-		snaps = snaps.sort((a, b) => a.id.localeCompare(b.id)).reverse();
+		// Sort by date
+		snaps = snaps.sort((a, b) => a.metadata.creationTimestamp.localeCompare(b.metadata.creationTimestamp)).reverse();
 
 		// Remove extra snapshots
 		for (let i = keep, l = snaps.length; i < l; ++i) {
